@@ -1,12 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
 import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-db=SQLAlchemy(app)
-#db.init_app(app)
+db = SQLAlchemy(app)
 
 class Data(db.Model):
     __tablename__ = "data"
@@ -23,22 +21,45 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 @app.route('/assos')
 def assos():
-    #stmt = select(Data)
-    #datas = Data.query.limit(10).all()
-    datas = Data.query.limit(10).all()
-    
+    datas = Data.query.limit(30).all()
     return render_template('assos.html', datas=datas)
-    #result = db.session.execute(stmt)
-    #for data in datas:
-     #   print(f"{data.rna_id}")
-    #return render_template('assos.html')
+
+@app.route('/delete/<int:data_id>')
+def delete(data_id):
+    data = Data.query.get(data_id)
+    db.session.delete(data)
+    db.session.commit()
+    return redirect(url_for('assos'))
+
+@app.route('/ajouter', methods=['GET', 'POST'])
+def ajouter():
+    if request.method == 'POST':
+        # Récupérer les données du formulaire
+        rna_id = request.form['rna_id']
+        rna_id_ex = request.form['rna_id_ex']
+        gestion = request.form['gestion']
+
+        # Créer une nouvelle instance de la classe Data avec les données du formulaire
+        new_data = Data(rna_id=rna_id, rna_id_ex=rna_id_ex, gestion=gestion)
+
+        # Ajouter la nouvelle instance à la base de données
+        db.session.add(new_data)
+        db.session.commit()
+
+        # Rediriger l'utilisateur vers la page assos
+        return redirect(url_for('assos'))
+
+    # Si la méthode est GET, afficher la page de formulaire
+    return render_template('ajouter.html')
+
 
 @app.route('/hello')
 @app.route('/hello/<name>')
 def hello(name=None):
     return render_template('hello.html', name=name)
-if __name__ == '__main__':
-    app.run()  
 
+if __name__ == '__main__':
+    app.run()
