@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Les statistiques</title>{% endblock %}
+
+{% block content %}
+  <div style="text-decoration: underline; margin-left: 280px;"> <h1> Répartition des associations par gestion : </h1> </div> <br> <br> 
+  <div style="width: 350px; height: 350px; text-align: center; margin: auto;">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+  
+  <div style="text-decoration: underline; margin-left: 280px;"> <h1> Répartition des associations par catégorie : </h1> </div> <br> <br>  
+  <div style="width: 350px; height: 350px; text-align: center; margin: auto;">
+    <canvas id="myBarChart" width="400" height="400" ></canvas>
+  </div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var data = JSON.parse('{{ graph_data|safe }}');
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: data.values,
+          backgroundColor: ['#C71585', '#FF69B4', '#FFB6C1', '#FFF0F5', '#9370DB', '#DB7093'],
+        }],
+        labels: data.labels
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            fontColor: '#333',
+            fontSize: 14
+          }
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                return previousValue + currentValue;
+              });
+              var currentValue = dataset.data[tooltipItem.index];
+              var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+              return data.labels[tooltipItem.index] + ': ' + currentValue + ' (' + percentage + '%)';
+            }
+          }
+        },
+        elements: {
+          arc: {
+            borderWidth: 0
+          }
+        }
+      }
+    });
+
+
+    var dataBar = JSON.parse('{{ graph_data|safe }}');
+  var ctxBar = document.getElementById('myBarChart').getContext('2d');
+  var myBarChart = new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+      labels: dataBar.labels,
+      datasets: [{
+        label: 'Nombre d\'associations',
+        data: dataBar.values,
+        backgroundColor: '#0000CD',
+        borderColor: '#333',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels: {
+          fontColor: '#333',
+          fontSize: 14
+        }
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+
+  </script>
+
+
+{% endblock %}

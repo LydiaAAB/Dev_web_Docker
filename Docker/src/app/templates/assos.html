@@ -7,6 +7,7 @@
 {% block content %}
 <h1>Assos page</h1>
 <a href="{{ url_for('ajouter') }}" class="btn btn-primary btn-sm">Ajouter</a>
+<a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-sm">Dashboard</a>
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +27,7 @@
             <td>{{ data.gestion }}</td>
             <td>
                 <a href="{{ url_for('modifier', data_id=data.id) }}" class="btn-modifier">Modifier</a>
-                <a href="{{ url_for('delete', data_id=data.id) }}" class="btn-delete">supprimer</a>
+                <a href="{{ url_for('delete', data_id=data.id) }}" class="btn-delete">Supprimer</a>
             </td>
         </tr>
         {% endfor %}
