@@ -25,7 +25,11 @@ def about():
 
 @app.route('/assos')
 def assos():
+<<<<<<< HEAD
     datas = Data.query.limit(20).all()
+=======
+    datas = Data.query.limit(30).all()
+>>>>>>> origin/main
     return render_template('assos.html', datas=datas)
 
 @app.route('/delete/<int:data_id>')
@@ -38,6 +42,7 @@ def delete(data_id):
 @app.route('/ajouter', methods=['GET', 'POST'])
 def ajouter():
     if request.method == 'POST':
+<<<<<<< HEAD
         rna_id = request.form['rna_id']
         rna_id_ex = request.form['rna_id_ex']
         gestion = request.form['gestion']
@@ -59,6 +64,26 @@ def modifier(data_id):
         return redirect(url_for('assos'))
     return render_template('modifier.html', data=data)
 
+=======
+        # Récupérer les données du formulaire
+        rna_id = request.form['rna_id']
+        rna_id_ex = request.form['rna_id_ex']
+        gestion = request.form['gestion']
+
+        # Créer une nouvelle instance de la classe Data avec les données du formulaire
+        new_data = Data(rna_id=rna_id, rna_id_ex=rna_id_ex, gestion=gestion)
+
+        # Ajouter la nouvelle instance à la base de données
+        db.session.add(new_data)
+        db.session.commit()
+
+        # Rediriger l'utilisateur vers la page assos
+        return redirect(url_for('assos'))
+
+    # Si la méthode est GET, afficher la page de formulaire
+    return render_template('ajouter.html')
+
+>>>>>>> origin/main
 
 @app.route('/hello')
 @app.route('/hello/<name>')
@@ -66,4 +91,8 @@ def hello(name=None):
     return render_template('hello.html', name=name)
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run()
+=======
+    app.run()
+>>>>>>> origin/main
