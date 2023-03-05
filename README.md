@@ -11,13 +11,21 @@ En outre, Docker m'a permit de déployer et de gérer facilement le serveur web 
 Les instructions d'installation pour mon projet de création de dashboard :
 
  Installer Docker et les bibliothèques Python nécessaires
+ 
  Clonez le dépôt Git sur la machine
+ 
  Naviguez vers le dossier racine du projet
+ 
  Créez un environnement virtuel pour Python
+ 
  Activez l'environnement virtuel
+ 
  Installez les dépendances Python nécessaires 
+ 
  Construisez les images Docker
+ 
  Démarrez les conteneurs Docker
+ 
  Ouvrir le navigateur et accédez à l'adresse locale pour voir le dashboard
 
 
