@@ -1,5 +1,4 @@
 {% extends 'base.html' %} 
-<<<<<<< HEAD
 
 {% block title %}
 <title>Page assos</title>
@@ -8,15 +7,6 @@
 {% block content %}
 <h1>Assos page</h1>
 <a href="{{ url_for('ajouter') }}" class="btn btn-primary btn-sm">Ajouter</a>
-=======
-{% block title %}
-<title>Page assos</title>
-{% endblock %} 
-{% block content %}
-<h1>Assos page</h1>
-<a href="{{ url_for('ajouter') }}" class="btn btn-primary btn-sm">Ajouter</a>
-
->>>>>>> origin/main
 <table class="table">
     <thead>
         <tr>
@@ -30,7 +20,6 @@
     <tbody>
         {% for data in datas %}
         <tr>
-<<<<<<< HEAD
             <td>{{ data.id }}</td>
             <td>{{ data.rna_id }}</td>
             <td>{{ data.rna_id_ex }}</td>
@@ -38,21 +27,10 @@
             <td>
                 <a href="{{ url_for('modifier', data_id=data.id) }}" class="btn-modifier">Modifier</a>
                 <a href="{{ url_for('delete', data_id=data.id) }}" class="btn-delete">supprimer</a>
-=======
-            <td>{{ data.id}}</td>
-            <td>{{ data.rna_id}}</td>
-            <td>{{ data.rna_id_ex}}</td>
-            <td>{{ data.gestion}}</td>
-            <td>
-                <a href="{{ url_for('delete', data_id=data.id) }}" class="btn btn-danger btn-sm">Supprimer</a>
->>>>>>> origin/main
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<<<<<<< HEAD
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> origin/main
+
