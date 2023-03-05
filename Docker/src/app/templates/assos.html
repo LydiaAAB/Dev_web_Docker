@@ -1,11 +1,12 @@
 {% extends 'base.html' %} 
+
 {% block title %}
 <title>Page assos</title>
 {% endblock %} 
+
 {% block content %}
 <h1>Assos page</h1>
 <a href="{{ url_for('ajouter') }}" class="btn btn-primary btn-sm">Ajouter</a>
-
 <table class="table">
     <thead>
         <tr>
@@ -19,12 +20,13 @@
     <tbody>
         {% for data in datas %}
         <tr>
-            <td>{{ data.id}}</td>
-            <td>{{ data.rna_id}}</td>
-            <td>{{ data.rna_id_ex}}</td>
-            <td>{{ data.gestion}}</td>
+            <td>{{ data.id }}</td>
+            <td>{{ data.rna_id }}</td>
+            <td>{{ data.rna_id_ex }}</td>
+            <td>{{ data.gestion }}</td>
             <td>
-                <a href="{{ url_for('delete', data_id=data.id) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                <a href="{{ url_for('modifier', data_id=data.id) }}" class="btn-modifier">Modifier</a>
+                <a href="{{ url_for('delete', data_id=data.id) }}" class="btn-delete">supprimer</a>
             </td>
         </tr>
         {% endfor %}

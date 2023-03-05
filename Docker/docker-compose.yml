@@ -11,6 +11,7 @@ services:
     volumes:
       - ./src:/app
     environment:
+      - FALSK_ENV=development
       - DATABASE_URL=mysql://root@mysql:3306/rna
     depends_on:
       - mysql
